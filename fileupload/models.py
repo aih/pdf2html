@@ -1,0 +1,18 @@
+from django.db import models
+
+class Pdf(models.Model):
+
+    # This is a small demo using FileField
+    file = models.FileField(upload_to="pdf")
+    slug = models.SlugField(max_length=50, blank=True)
+
+    def __unicode__(self):
+        return self.file
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('upload-new', )
+
+    def save(self, *args, **kwargs):
+        self.slug = self.file.name
+        super(Pdf, self).save(*args, **kwargs)
