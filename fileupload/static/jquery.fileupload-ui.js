@@ -115,8 +115,11 @@
                                     $(this).show();
                                     if(file.name.slice(-4) == '.pdf'){
                                         $.getJSON('/upload/pdftohtml/', {'filename' : file.name}, function(json) {
-                                        if(json['success']) {alert('Successfully uploaded ' + file.name + '!')} else {
-                                            alert('Sorry, failed to upload file.')
+                                        if(json['success']) {
+                                            alert('Successfully uploaded ' + file.name + '!');
+                                            $('#message').text('Converted?');
+                                            } else {
+                                            alert('Sorry, could not convert file.');
                                             };
                                         });
                                     } else {

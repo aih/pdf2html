@@ -52,7 +52,8 @@ def pdftohtml(request, filename):
     if request.method == u'GET':
         GET = request.GET
         fname =  GET['filename']
-        if fname[-4:] == '.pdf':
+        if fname[-4:] == '.pdf': #change this to validate actual pdf file format
+            ispdf = True
             fname = fname.rstrip('.pdf')
         # Convert to html and get result
         # if successful:
@@ -60,6 +61,7 @@ def pdftohtml(request, filename):
             htmlurl = fname + uuid.uuid4().urn.split(':')[2].replace('-','')[:16]+'.html'
             results = {'success': True, 'ispdf' : True, 'hash': htmlurl}
         else:
-            results = {'success': False, 'ispdf' : False, 'hash': 'Not PDF'}
+            ispdf = False
+            results = {'success': False, 'ispdf' : ispdf, 'hash': 'Not PDF'}
         json = simplejson.dumps(results)
         return HttpResponse(json, mimetype='application/json')
