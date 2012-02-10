@@ -58,10 +58,14 @@ def pdftohtml(request, filename):
         # Convert to html and get result
         # if successful:
         #     create hash for url
-            htmlurl = fname + uuid.uuid4().urn.split(':')[2].replace('-','')[:16]+'.html'
+            fileid = uuid.uuid4().urn.split(':')[2].replace('-','')[:16]
+            htmlurl = fname + fileid +'.html'
             results = {'success': True, 'ispdf' : True, 'hash': htmlurl}
         else:
             ispdf = False
             results = {'success': False, 'ispdf' : ispdf, 'hash': 'Not PDF'}
         json = simplejson.dumps(results)
         return HttpResponse(json, mimetype='application/json')
+
+def downloadhtml(request):
+    return HttpResponse(json, mimetype='application/json') 

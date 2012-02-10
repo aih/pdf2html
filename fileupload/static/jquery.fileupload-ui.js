@@ -116,14 +116,16 @@
                                     if(file.name.slice(-4) == '.pdf'){
                                         $.getJSON('/upload/pdftohtml/', {'filename' : file.name}, function(json) {
                                         if(json['success']) {
-                                            alert('Successfully uploaded ' + file.name + '!');
-                                            $('#message').text('Converted?');
+                                            alert('Successfully converted ' + file.name + '! See link for html.');
+                                            //$('#download').append('<a href = "/downloadhtml/">Download converted html</a>');
+                                            $('#message')
+                                                .append('<a href ="' + json['hash'] +'" >View <i>' + file.name + '</i> converted to html</a><br/>');
                                             } else {
                                             alert('Sorry, could not convert file.');
                                             };
                                         });
                                     } else {
-                                        alert('Not a pdf: can not convert file.');
+                                        alert(file.name + ' is not a pdf: can not convert file.');
                                     };
                                 });
                         });
