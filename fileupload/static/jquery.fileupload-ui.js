@@ -114,7 +114,11 @@
                                     // Fix for IE7 and lower:
                                     $(this).show();
                                     $.getJSON('/upload/pdftohtml/', {'filename' : file.name}, function(json) {
-                                    if(json['success']) {alert('Successfully uploaded ' + file.name + '!')};
+                                    if(json['success']) {alert('Successfully uploaded ' + file.name + '!')} else {
+                                        var reason = '';
+                                        if(!json['ispdf']) {reason = 'Not a pdf';};
+                                        alert('Can not convert file. ' + reason);
+                                        };
                                     });
                                 });
                         });
