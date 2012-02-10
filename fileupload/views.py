@@ -6,6 +6,7 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
 from django.conf import settings
+import uuid
 
 
 def response_mimetype(request):
@@ -46,20 +47,19 @@ class JSONResponse(HttpResponse):
         content = simplejson.dumps(obj,**json_opts)
         super(JSONResponse,self).__init__(content,mimetype,*args,**kwargs)
 
-def pdftohtml(request): 
+def pdftohtml(request, filename): 
     results = {'success':False}
-
     if request.method == u'GET':
         GET = request.GET
+        fname =  GET['filename']
+        if fname[-4:] == '.pdf':
+            fname = fname.rstrip('.pdf')
         # Convert to html and get result
         # if successful:
-        #     converted = 'True'
         #     create hash for url
-        test = 1 + 1
-        if test == 2:
-            htmlurl = str(test)+'.html'
+            htmlurl = fname + uuid.uuid4().urn.split(':')[2].replace('-','')[:16]+'.html'
             results = {'success': True, 'hash': htmlurl}
+            json = simplejson.dumps(results)
         else:
-            results = {'success': False, 'hash': ''}
-        json = simplejson.dumps(results)
+            results = {'success': False, 'hash': 'Files other than PDF cannot be uploaded'}
         return HttpResponse(json, mimetype='application/json')

@@ -113,8 +113,8 @@
                                 .fadeIn(function () {
                                     // Fix for IE7 and lower:
                                     $(this).show();
-                                    $.getJSON('/upload/pdftohtml/', {}, function(json) {
-                                    alert('success')
+                                    $.getJSON('/upload/pdftohtml/', {'filename' : file.name}, function(json) {
+                                    if(json['success']) {alert('Successfully uploaded ' + file.name + '!')};
                                     });
                                 });
                         });
