@@ -16,3 +16,17 @@ class Pdf(models.Model):
     def save(self, *args, **kwargs):
         self.slug = self.file.name
         super(Pdf, self).save(*args, **kwargs)
+
+class Html(models.Model):
+
+    filename = models.SlugField(max_length=50, blank=True)
+
+    def __unicode__(self):
+        return self.filename
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('pdftohtml', [self.filename + self.id] )
+
+    def save(self, *args, **kwargs):
+        super(Html, self).save(*args, **kwargs)
