@@ -1,4 +1,4 @@
-from fileupload.models import Pdf
+from fileupload.models import Pdf, Html
 from django.views.generic import CreateView, DeleteView
 
 from django.http import HttpResponse
