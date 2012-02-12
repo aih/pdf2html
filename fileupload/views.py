@@ -1,7 +1,7 @@
 from fileupload.models import Pdf, Html
 from fileupload.utils.fileconvert import convertpdf2html 
 from django.views.generic import CreateView, DeleteView
-
+from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -26,7 +26,6 @@ class PdfCreateView(CreateView):
         response = JSONResponse(data, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
-
 
 class PdfDeleteView(DeleteView):
     model = Pdf
@@ -59,9 +58,9 @@ def pdftohtml(request, filename):
             print pdfpath
             htmltxt = convertpdf2html(pdfpath)
             fname = fname[:-4]
-            # fileid = uuid.uuid4().urn.split(':')[2].replace('-','')[:16]
-            # htmlurl = fname + fileid +'.html'
-            htmlobj = Html(filename = fname, html = htmltxt)
+            fileid = uuid.uuid4().urn.split(':')[2].replace('-','')[:16]+'.html'
+            #htmlurl = fname + fileid +'.html'
+            htmlobj = Html(filename = fname, fileid = fileid, html = htmltxt)
             htmlobj.save()
             htmlurl = htmlobj.get_absolute_url()
             print 'htmlurl: ' + htmlurl
@@ -71,6 +70,10 @@ def pdftohtml(request, filename):
             results = {'success': False, 'ispdf' : ispdf, 'hash': 'Not PDF'}
         json = simplejson.dumps(results)
         return HttpResponse(json, mimetype='application/json')
+
+def viewhtml(request, fileid):
+    htmlobj = Html.objects.get(fileid = fileid)
+    return render_to_response('viewhtml/converted.html', {'htmltxt': htmlobj.html}, mimetype="application/xhtml+xml")
 
 def downloadhtml(request):
     return HttpResponse(json, mimetype='application/json') 
