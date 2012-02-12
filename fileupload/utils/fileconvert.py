@@ -4,8 +4,16 @@ import subprocess
 
 def convertpdf2html(pdffilepath):
     subprocess.call(['pdftotext', '-layout', pdffilepath])
-    p = subprocess.Popen(['txt2html', '-tables', '--xhtml', pdffilepath.rstrip('.pdf')+'.txt'], bufsize=-1, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr= subprocess.PIPE, close_fds = True)
+    txtfilepath = pdffilepath[:-4] + '.txt'
+    with open(txtfilepath, 'rb') as filename:
+        txt = filename.read()
+    #txt = unicode(txt, "utf-8", errors = 'ignore')
+    txt = clean_html(txt)
+
+    with open(txtfilepath, 'wb') as filename:
+        filename.write(txt)
+    p = subprocess.Popen(['txt2html', '-tables', '--xhtml', txtfilepath], bufsize=-1, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr= subprocess.PIPE, close_fds = True)
     htmltext, stderr_text = p.communicate() 
-    htmltext = clean_html(htmltext)
+    htmltext = htmltext.replace('&Acirc;','')
     return htmltext
 

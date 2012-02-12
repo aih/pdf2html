@@ -119,7 +119,7 @@
                                             alert('Successfully converted ' + file.name + '! See link for html.');
                                             //$('#download').append('<a href = "/downloadhtml/">Download converted html</a>');
                                             $('#htmllinks .linkslist')
-                                                .append('<li><a href ="' + json['hash'] +'" >View <i>' + file.name + '</i> converted to html</a></li>');
+                                                .append('<li><a href ="' + json['hash'] +'" target="_blank" >View <i>' + file.name + '</i> converted to html</a></li>');
                                             } else {
                                             alert('Sorry, could not convert file.');
                                             };
