@@ -20,13 +20,14 @@ class Pdf(models.Model):
 class Html(models.Model):
 
     filename = models.SlugField(max_length=50, blank=True)
+    html = models.TextField()
 
     def __unicode__(self):
         return self.filename
 
     @models.permalink
     def get_absolute_url(self):
-        return ('pdftohtml', [self.filename + self.id] )
+        return ('pdftohtml', [self.filename + str(self.id)] )
 
     def save(self, *args, **kwargs):
         super(Html, self).save(*args, **kwargs)

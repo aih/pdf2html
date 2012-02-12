@@ -1,4 +1,5 @@
 from fileupload.models import Pdf, Html
+from fileupload.utils.fileconvert import convertpdf2html 
 from django.views.generic import CreateView, DeleteView
 
 from django.http import HttpResponse
@@ -6,7 +7,7 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
 from django.conf import settings
-import uuid
+import uuid, os
 
 
 def response_mimetype(request):
@@ -54,12 +55,16 @@ def pdftohtml(request, filename):
         fname =  GET['filename']
         if fname[-4:] == '.pdf': #change this to validate actual pdf file format
             ispdf = True
-            fname = fname.rstrip('.pdf')
-        # Convert to html and get result
-        # if successful:
-        #     create hash for url
-            fileid = uuid.uuid4().urn.split(':')[2].replace('-','')[:16]
-            htmlurl = fname + fileid +'.html'
+            pdfpath =  os.path.join(settings.MEDIA_ROOT, 'pdf', fname)
+            print pdfpath
+            htmltxt = convertpdf2html(pdfpath)
+            fname = fname[:-4]
+            # fileid = uuid.uuid4().urn.split(':')[2].replace('-','')[:16]
+            # htmlurl = fname + fileid +'.html'
+            htmlobj = Html(filename = fname, html = htmltxt)
+            htmlobj.save()
+            htmlurl = htmlobj.get_absolute_url()
+            print 'htmlurl: ' + htmlurl
             results = {'success': True, 'ispdf' : True, 'hash': htmlurl}
         else:
             ispdf = False
