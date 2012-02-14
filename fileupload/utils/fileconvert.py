@@ -12,8 +12,7 @@ def convertpdf2html(pdffilepath):
 
     with open(txtfilepath, 'wb') as filename:
         filename.write(txt)
-    p = subprocess.Popen(['txt2html', '-tables', '--xhtml', txtfilepath], bufsize=-1, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr= subprocess.PIPE, close_fds = True)
+    p = subprocess.Popen(['txt2html', '--tables', '-8', '--xhtml', txtfilepath ], bufsize=-1, stdin = subprocess.PIPE, stdout = subprocess.PIPE, stderr= subprocess.PIPE, close_fds = True)
     htmltext, stderr_text = p.communicate() 
-    htmltext = htmltext.replace('&Acirc;','')
     return htmltext
 

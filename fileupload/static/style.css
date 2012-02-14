@@ -13,10 +13,28 @@
 body {
   font-family: Verdana, Arial, sans-serif;
   font-size: 13px;
-  margin: 0;
+  margin: 30px;
   padding: 20px;
 }
 
-a {
-  color: #222;
+/* a {
+ * color: #222;
+ * 
+ * }
+*/
+
+.notes {
+    padding: 50px;
 }
+
+.preview {
+    visibility: hidden;
+}
+
+.title {
+    color: #DD4B39;
+    font-size: 14pt;
+    line-height: 29px;
+    padding: 50px, 0, 50px, 0 ;
+}
+

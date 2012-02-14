@@ -27,17 +27,18 @@
             autoUpload: false,
             // The following option limits the number of files that are
             // allowed to be uploaded using this widget:
-            maxNumberOfFiles: undefined,
+            maxNumberOfFiles: 5,
             // The maximum allowed file size:
-            maxFileSize: undefined,
+            maxFileSize: 1000000,
             // The minimum allowed file size:
             minFileSize: 1,
             // The regular expression for allowed file types, matches
             // against either file type or file name:
-            acceptFileTypes:  /.+$/i,
+            acceptFileTypes:  /\.pdf$/i,
             // The regular expression to define for which files a preview
             // image is shown, matched against the file type:
-            previewFileTypes: /^image\/(gif|jpeg|png)$/,
+            previewFileTypes: /^image\/$/,
+            // previewFileTypes: /^image\/(gif|jpeg|png)$/,
             // The maximum width of the preview images:
             previewMaxWidth: 80,
             // The maximum height of the preview images:
@@ -119,7 +120,7 @@
                                             alert('Successfully converted ' + file.name + '! See link for html.');
                                             //$('#download').append('<a href = "/downloadhtml/">Download converted html</a>');
                                             $('#htmllinks .linkslist')
-                                                .append('<li><a href ="' + json['hash'] +'" target="_blank" >View <i>' + file.name + '</i> converted to html</a></li>');
+                                                .append('<li><a href ="' + json['hash'] +'" target="_blank" >View <i>' + file.name + '</i> converted to html</a><ul><li>Copy permalink here: ' +window.location.pathname.split('/')[0]+ json['hash'] + '</li></ul></li>');
                                             } else {
                                             alert('Sorry, could not convert file.');
                                             };
@@ -649,6 +650,24 @@
                 .button('disable');
             this._disableFileInputButton();
             $.blueimp.fileupload.prototype.disable.call(this);
+        },
+
+        _copy: function (inElement) {
+            if (inElement.createTextRange) {
+                var range = inElement.createTextRange();
+                if (range && BodyLoaded==1)
+                    range.execCommand('Copy');
+            } else {
+                var flashcopier = 'flashcopier';
+                if(!document.getElementById(flashcopier)) {
+                    var divholder = document.createElement('div');
+                    divholder.id = flashcopier;
+                    document.body.appendChild(divholder);
+                }
+                document.getElementById(flashcopier).innerHTML = '';
+                var divinfo = '<embed src="_clipboard.swf" FlashVars="clipboard='+encodeURIComponent(inElement.value)+'" width="0" height="0" type="application/x-shockwave-flash"></embed>';
+                document.getElementById(flashcopier).innerHTML = divinfo;
+            }
         }
 
     });

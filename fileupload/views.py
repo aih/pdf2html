@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+from lxml import etree
 
 from django.conf import settings
 import uuid, os
@@ -74,6 +75,12 @@ def pdftohtml(request, filename):
 def viewhtml(request, fileid):
     htmlobj = Html.objects.get(fileid = fileid)
     return render_to_response('viewhtml/converted.html', {'htmltxt': htmlobj.html}, mimetype="application/xhtml+xml")
+
+def viewmshtml(request, fileid):
+    htmlobj = Html.objects.get(fileid = fileid)
+    root = etree.XML(htmlobj.html)
+    body = etree.tostring(root, pretty_print = True)
+    return render_to_response('viewhtml/msconverted.html', {'htmltxt': body, 'filename' : htmlobj.filename}, mimetype="application/xhtml+xml")
 
 def downloadhtml(request):
     return HttpResponse(json, mimetype='application/json') 
