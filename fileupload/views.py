@@ -19,6 +19,7 @@ def response_mimetype(request):
 
 class PdfCreateView(CreateView):
     model = Pdf
+    template_name = 'fileupload/pdf_form.html'
 
     def form_valid(self, form):
         self.object = form.save()
@@ -30,6 +31,7 @@ class PdfCreateView(CreateView):
 
 class PdfDeleteView(DeleteView):
     model = Pdf
+    template_name = 'fileupload/pdf_form.html'
     
     def delete(self, request, *args, **kwargs):
         """
