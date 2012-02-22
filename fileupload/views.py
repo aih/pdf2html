@@ -1,5 +1,5 @@
-from fileupload.models import Pdf, Html
-from fileupload.utils.fileconvert import convertpdf2html 
+from models import Pdf, Html
+from utils.fileconvert import convertpdf2html 
 from django.views.generic import CreateView, DeleteView
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -19,7 +19,7 @@ def response_mimetype(request):
 
 class PdfCreateView(CreateView):
     model = Pdf
-    template_name = 'fileupload/pdf_form.html'
+    template_name = 'pdf_form.html'
 
     def form_valid(self, form):
         self.object = form.save()
@@ -31,7 +31,7 @@ class PdfCreateView(CreateView):
 
 class PdfDeleteView(DeleteView):
     model = Pdf
-    template_name = 'fileupload/pdf_form.html'
+    template_name = 'pdf_form.html'
     
     def delete(self, request, *args, **kwargs):
         """
@@ -76,7 +76,7 @@ def pdftohtml(request, filename):
 
 def viewhtml(request, fileid):
     htmlobj = Html.objects.get(fileid = fileid)
-    return render_to_response('viewhtml/converted.html', {'htmltxt': htmlobj.html}, mimetype="application/xhtml+xml")
+    return render_to_response('converted.html', {'htmltxt': htmlobj.html}, mimetype="application/xhtml+xml")
 
 def viewmshtml(request, fileid):
     htmlobj = Html.objects.get(fileid = fileid)
