@@ -1,6 +1,6 @@
 Update
 =====
-**TODO** Use the terrific library for pdf to html conversion: https://github.com/coolwanglu/pdf2htmlEX/wiki/Quick-Start[pdf2htmlEX], using ttfautohint as --external-hint-tool=ttfautohint
+**TODO** Use the terrific library for pdf to html conversion: [pdf2htmlEX](https://github.com/coolwanglu/pdf2htmlEX/wiki/Quick-Start), using ttfautohint as --external-hint-tool=ttfautohint
 
 Conversion to Word can use pandoc
 
