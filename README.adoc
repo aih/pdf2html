@@ -1,0 +1,14 @@
+pdf2html
+=====
+
+A web-based converter from pdf to html and eventually other formats (text and MSWord). The UI is based on a Django-backed app built on http://aquantum-demo.appspot.com/file-upload[jQuery-File-Upload]. That JQuery app was developed by Sebastian Tschan, with the source available on https://github.com/blueimp/jQuery-File-Upload[Github]. This was https://github.com/sigurdga/django-jquery-file-upload[ported to Django] by Sigurd Gartmann (https://github.com/sigurdga/[sigurdga on github]).
+
+I connected the UI to a back-end pdf converter. For a Django app to use JQuery-File-Upload, you should branch from [here](https://github.com/sigurda/django-jquery-file-upload).
+
+TODO: Use the terrific library for pdf to html conversion: [pdf2htmlEX](https://github.com/coolwanglu/pdf2htmlEX/wiki/Quick-Start), using ttfautohint as --external-hint-tool=ttfautohint
+
+Conversion to Word can use pandoc
+
+License
+=======
+MIT, as the original project. See LICENSE.txt.
